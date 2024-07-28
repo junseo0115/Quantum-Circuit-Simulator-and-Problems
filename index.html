@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>양자컴퓨팅을 배워보자!-Let's Learn Quantum Computing!</title>
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/9.5.0/math.min.js"></script>
 </head>
 
 
@@ -13,11 +14,11 @@
     <header class="header">양자컴퓨팅을 배워보자! - Let's Learn Quantum Computing!</header>
     
     <main class="gate-area">gate
-      <div class="gate" id="x-gate">X</div>
-      <div class="gate" id="y-gate">Y</div>
-      <div class="gate" id="z-gate">Z</div>
-      <div class="gate" id="H-gate">H</div>
-      <div class="gate" id="'CNOT-gate">CNOT</div>
+      <div class="gate outCircuit" id="x-gate">X</div>
+      <div class="gate outCircuit" id="y-gate">Y</div>
+      <div class="gate outCircuit" id="z-gate">Z</div>
+      <div class="gate outCircuit" id="H-gate">H</div>
+      <div class="gate outCircuit" id="CNOT-gate">CNOT</div>
     </main>
 
 
@@ -31,14 +32,29 @@
         <div class="circuit-name">q3</div>
         <div class="circuit-name">q4</div>
         <div class="circuit-name">q5</div>
-        <div class="circuit">circuit0</div>
-        <div class="circuit">circuit1</div>
-        <div class="circuit">circuit2</div>
-        <div class="circuit">circuit3</div>
-        <div class="circuit">circuit4</div>
-        <div class="circuit">circuit5</div>
+
+
+        <div class="circuit"></div>
+        <div class="circuit"></div>
+        <div class="circuit"></div>
+        <div class="circuit"></div>
+        <div class="circuit"></div>
+        <div class="circuit"></div>
+        
       </div>
     </main>
+
+    <footer class="histogram-area">
+      <div class="histogram-header">histogram</div>
+
+      <div class="histogram-main">
+        <div id='hs1'  style="background-color: brown; margin: 0 5px ; height: 100px;"></div>
+      </div>
+    </footer>
+    
+
+
+
 
 
 
@@ -61,7 +77,7 @@
 
 
     <footer class="blochsphere-area">blochsphere</footer>
-    <footer class="histogram-area">histogram</footer>
+
   </div>  
 
 
@@ -69,6 +85,16 @@
 
 
 
+  <script>
+    const histogramMain = document.getElementsByClassName('histogram-main')[0]
+    for (let i=0; i<16; i++){
+      const baseKet = document.createElement('div');
+      baseKet.append(document.createTextNode((i).toString(2).padStart(4, '0')));
+      histogramMain.append(baseKet);
+      baseKet.style.gridRow = '2/3';
+      baseKet.style.gridColumn = `${i+1} / ${i+2}`;
+    };
+  </script>
 
   <script src="script.js"></script>
 </body>

@@ -24,11 +24,33 @@ body {
   font-size: xx-large;
 }
 
+
 .gate-area {
   grid-area: gate;
   background-color: #f4f4f4;
   padding: 10px;
 }
+
+.gate{
+  width: 50px;
+  height: 50px;
+  background-color: #e06565;
+  color: white;
+  position: absolute;
+  cursor: pointer;
+}
+
+.inCircuit{
+  position: absolute;
+  margin: 0 10px;
+}
+
+#x-gate { top: 160px; left: 20px; }
+#y-gate { top: 215px; left: 20px; }
+#z-gate { top: 270px; left: 20px; }
+#H-gate { top: 325px; left: 20px; }
+#CNOT-gate { top: 380px; left: 20px; }
+
 
 .circuit-area {
   grid-area: circuit;
@@ -64,9 +86,14 @@ body {
 .circuit-name:nth-child(6){
   grid-row: 6/7;
 }
+
 .circuit{
   background-color:#333;
   color: white;
+  margin: 30px 0;
+  display: flex;
+  align-items: center;
+  position: relative;
 }
 
 
@@ -80,16 +107,27 @@ body {
 
 .histogram-area {
   grid-area: histogram;
-  background-color: #333;
-  color: white;
+  background-color: #e4e4e4;
   text-align: center;
-  padding: 10px;
+  padding:10px;
 }
 
+.histogram-main{
+  display: grid;
+  height: 250px;
+  grid-template-columns: repeat(16,1fr);
+  grid-template-rows: 7fr 1fr;
+  padding:10px;
+  row-gap: 5px;
+  column-gap: 5px;
+  align-items: end;
+
+
+
+}
 .blochsphere-area {
   grid-area: blochsphere;
-  background-color: #333;
-  color: white;
+  background-color: #e4e4e4;
   text-align: center;
   padding: 10px;
 }
@@ -100,10 +138,3 @@ canvas {
   height: 100%;
 }
 
-.gate{
-  width: 50px;
-  height: 50px;
-  background-color: #333;
-  margin:5px 5px;
-  color: white;
-}
