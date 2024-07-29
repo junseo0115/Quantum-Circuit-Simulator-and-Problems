@@ -69,7 +69,7 @@ gates.forEach(gate => {
         inCircuitGates[circuitIndex+1].push('II');
         const statevector = calcStateVector();
         plotHistogram(statevector);
-        // plotStatevector();
+        plotStatevector(statevector);
 
 
 
@@ -85,7 +85,7 @@ gates.forEach(gate => {
         inCircuitGates[circuitIndex].push(gate.innerHTML);
         const statevector = calcStateVector();
         plotHistogram(statevector);
-        // plotStatevector()
+        plotStatevector(statevector);
       }
     }
     
@@ -124,16 +124,24 @@ gates.forEach(gate => {
   });
 });
 
+document.getElementById('clear').addEventListener('click', function() {
+  location.reload();
+});
 
 
 const X=[[0,math.complex(1,0)],[math.complex(1,0),0]];
 const Y=[[0,math.complex(0,-1)],[math.complex(0,1),0]];
 const Z=[[math.complex(1,0),0],[0,math.complex(-1,0)]];
 const H=[[math.complex((0.5)**(0.5),0),math.complex((0.5)**(0.5),0)],[math.complex((0.5)**(0.5),0),math.complex(-((0.5)**(0.5)),0)]];
+
+const T=[[math.complex(1,0),0],[0,math.complex((0.5)**(0.5),(0.5)**(0.5))]];
+
 const I=[[math.complex(1,0),0],[0,math.complex(1,0)]];
 const II=[[math.complex(1,0)]];
 const CNOT=[[math.complex(1,0),0,0,0],[0,math.complex(1,0),0,0],[0,0,0,math.complex(1,0)],[0,0,math.complex(1,0),0]];
-const gateDic = {'X':X, 'Y':Y, 'Z':Z, 'H':H, 'I':I, 'CNOT':CNOT, 'II':II};
+const SWAP=[[math.complex(1,0),0,0,0],[0,0,math.complex(1,0),0],[0,math.complex(1,0),0,0],[0,0,0,math.complex(1,0)]];
+
+const gateDic = {'X':X, 'Y':Y, 'Z':Z, 'H':H, 'I':I, 'CNOT':CNOT, 'II':II, 'T':T, 'SWAP':SWAP};
 
 function tensorProduct(A, B) {
   const rowsA = A.length;
@@ -212,17 +220,29 @@ function plotHistogram(statevector) {
   for (let i=0; i<16; i++) {
     const histogram = document.getElementById(`histogram${i}`);
     histogram.style.height = `${200*(math.abs(statevector[i]))**2}px`;
+    if (statevector[i] != 0) {
+      histogram.innerHTML = `${(math.abs(statevector[i])**2).toFixed(4)}`;
+    } else {
+      histogram.innerHTML = '';
+    }
   }
 }
 
-// function plotStatevector() {
-//   const statevectormain = document.getElementsByClassName('statevector-main')[0];
-//   const statevectorStr='';
+function plotStatevector(statevector) {
+  const statevectormain = document.getElementsByClassName('statevector-main')[0];
+  let statevectorStr = '';
 
-//   for (let i=0; )
+  for (let i = 0; i < 16; i++) {
+    if (statevector[i] != 0) {
+      const realPart = statevector[i].re.toFixed(4);
+      const imaginaryPart = statevector[i].im.toFixed(4);
+      statevectorStr += `+(${realPart}+${imaginaryPart}i)|` + (i).toString(2).padStart(4, '0') + '> '; 
+    }
+  }
 
-//   statevectormain.innerHTML = statevectorStr;
-// }
+  statevectormain.innerHTML = statevectorStr;
+}
+
 
 
 

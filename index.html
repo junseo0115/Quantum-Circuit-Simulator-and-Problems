@@ -6,6 +6,19 @@
   <title>양자컴퓨팅을 배워보자!-Let's Learn Quantum Computing!</title>
   <link rel="stylesheet" href="style.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/9.5.0/math.min.js"></script>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+    </script>
+    <script type="text/javascript" id="MathJax-script" async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+    </script>
 </head>
 
 
@@ -18,7 +31,9 @@
       <div class="gate outCircuit" id="y-gate">Y</div>
       <div class="gate outCircuit" id="z-gate">Z</div>
       <div class="gate outCircuit" id="H-gate">H</div>
+      <div class="gate outCircuit" id="T-gate">T</div>
       <div class="doubleGate outCircuit" id="CNOT-gate">CNOT</div>
+      <div class="doubleGate outCircuit" id="SWAP-gate">SWAP</div>
 
     
     </main>
@@ -39,6 +54,7 @@
         <div class="circuit"></div>
         <div class="circuit"></div>
         <div class="circuit"></div>
+        <button id="clear">Clear</button>
 
         
       </div>
@@ -54,6 +70,7 @@
       <ul>
         <li>
           <button>Tutorial</button>
+          <p>분수 나타내기 $\frac{2}{4} = \frac{1}{2}$</p>
         </li>
         <li>
           <button>Gate</button>
@@ -84,7 +101,7 @@
     const histogramMain = document.getElementsByClassName('histogram-main')[0]
     for (let i=0; i<16; i++){
       const baseKet = document.createElement('div');
-      baseKet.append(document.createTextNode((i).toString(2).padStart(4, '0')));
+      baseKet.append(document.createTextNode('|'+(i).toString(2).padStart(4, '0')+'>'));
       histogramMain.append(baseKet);
       baseKet.style.gridRow = '2/3';
       baseKet.style.gridColumn = `${i+1} / ${i+2}`;
@@ -105,6 +122,7 @@
   </script>
 
   <script src="script.js"></script>
+
 </body>
 
 

@@ -64,10 +64,12 @@ body {
 
 
 #x-gate { top: 160px; left: 20px; }
-#y-gate { top: 220px; left: 20px; }
-#z-gate { top: 280px; left: 20px; }
-#H-gate { top: 340px; left: 20px; }
-#CNOT-gate { top: 400px; left: 20px; }
+#y-gate { top: 160px; left: 90px; }
+#z-gate { top: 160px; left: 160px; }
+#H-gate { top: 160px; left: 230px; }
+#T-gate { top: 160px; left:300px;}
+#CNOT-gate { top: 230px; left: 20px; }
+#SWAP-gate { top: 230px; left: 90px}
 
 
 .circuit-area {
