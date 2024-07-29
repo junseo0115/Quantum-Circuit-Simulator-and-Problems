@@ -11,7 +11,7 @@ body {
   grid-template-areas: 
     "header header aside"
     "gate circuit aside"
-    "blochsphere histogram aside";
+    "statevector histogram aside";
   grid-gap: 20px;
   padding: 10px;
 }
@@ -40,16 +40,34 @@ body {
   cursor: pointer;
 }
 
+.doubleGate{
+  width: 50px;
+  height: 100px;
+  background-color: #e06565;
+  color: white;
+  position: absolute;
+  cursor: pointer;
+}
+
+.gateLine{
+  background-color: #e06565;
+  position: absolute;
+  cursor: pointer;
+  width: 10px;
+  height: 100px;
+}
+
 .inCircuit{
   position: absolute;
   margin: 0 10px;
 }
 
+
 #x-gate { top: 160px; left: 20px; }
-#y-gate { top: 215px; left: 20px; }
-#z-gate { top: 270px; left: 20px; }
-#H-gate { top: 325px; left: 20px; }
-#CNOT-gate { top: 380px; left: 20px; }
+#y-gate { top: 220px; left: 20px; }
+#z-gate { top: 280px; left: 20px; }
+#H-gate { top: 340px; left: 20px; }
+#CNOT-gate { top: 400px; left: 20px; }
 
 
 .circuit-area {
@@ -125,8 +143,8 @@ body {
 
 
 }
-.blochsphere-area {
-  grid-area: blochsphere;
+.statevector-area {
+  grid-area: statevector;
   background-color: #e4e4e4;
   text-align: center;
   padding: 10px;

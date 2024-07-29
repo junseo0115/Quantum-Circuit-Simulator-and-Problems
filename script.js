@@ -26,7 +26,71 @@ gates.forEach(gate => {
         }
       }
     }
+
+
+
+
+
+
+
+    function addGate(circuitIndex, gate) {
+      if (gate.classList.contains('doubleGate') && circuitIndex < circuits.length - 1) {
+        circuits[circuitIndex].style.background = '#333';
+        circuits[circuitIndex+1].style.background = '#333'
+        while (inCircuitGates[circuitIndex].length !== inCircuitGates[circuitIndex + 1].length) {
+          if (inCircuitGates[circuitIndex].length < inCircuitGates[circuitIndex + 1].length) {
+            inCircuitGates[circuitIndex].push('I');
+          } else {
+            inCircuitGates[circuitIndex + 1].push('I');
+          }
+        }
+        const newGate1 = document.createElement('div');
+        newGate1.classList.add('gate', 'inCircuit');
+        newGate1.style.left = `${75 * inCircuitGates[circuitIndex].length}px`;
+        const gatename1 = document.createTextNode(gate.innerHTML);
+        newGate1.append(gatename1);
+        circuits[circuitIndex].appendChild(newGate1);
+   
+        const newGate2 = document.createElement('div');
+        newGate2.classList.add('gate', 'inCircuit');
+        newGate2.style.left = `${75 * inCircuitGates[circuitIndex].length}px`;
+        const gatename2 = document.createTextNode(gate.innerHTML);
+        newGate2.append(gatename2);
+        circuits[circuitIndex+1].appendChild(newGate2);
+
+        const gateLine = document.createElement('div');
+        gateLine.classList.add('gateLine');
+        gateLine.style.left = `${75 * inCircuitGates[circuitIndex].length+30}px`;
+        gateLine.style.top = `${0}px`;
+        circuits[circuitIndex].appendChild(gateLine);
+
+
+        inCircuitGates[circuitIndex].push(gate.innerHTML);
+        inCircuitGates[circuitIndex+1].push('II');
+        const statevector = calcStateVector();
+        plotHistogram(statevector);
+        // plotStatevector();
+
+
+
+
+      } else if ( !gate.classList.contains('doubleGate')) {
+        circuits[circuitIndex].style.background = '#333';
+        const newGate = document.createElement('div');
+        newGate.classList.add('gate', 'inCircuit');
+        newGate.style.left = `${75 * inCircuitGates[circuitIndex].length}px`;
+        const gatename = document.createTextNode(gate.innerHTML);
+        newGate.append(gatename);
+        circuits[circuitIndex].appendChild(newGate);
+        inCircuitGates[circuitIndex].push(gate.innerHTML);
+        const statevector = calcStateVector();
+        plotHistogram(statevector);
+        // plotStatevector()
+      }
+    }
     
+
+
     function mouseUpHandler() {
       const gateRect = gateElement.getBoundingClientRect();
       for (let i=0; i<circuits.length; i++) {
@@ -37,20 +101,13 @@ gates.forEach(gate => {
           circuits[i].style.background = '#333';
 
 
-          const newGate = document.createElement('div');
-          newGate.classList.add('gate','inCircuit');
-          newGate.style.left = `${75*inCircuitGates[i].length}px`;
-
-          const gatename = document.createTextNode(gateElement.innerHTML);
-          newGate.append(gatename);
-
-          circuits[i].appendChild(newGate);
-
-          inCircuitGates[i].push(gateElement.innerHTML);
-
-          plotHistogram();
+          addGate(i, gateElement)
+  
+          break;
         }
-      }
+
+
+      } 
       
       gateElement.style.left = `${originalX}px`;
       gateElement.style.top = `${originalY}px`;
@@ -74,7 +131,9 @@ const Y=[[0,math.complex(0,-1)],[math.complex(0,1),0]];
 const Z=[[math.complex(1,0),0],[0,math.complex(-1,0)]];
 const H=[[math.complex((0.5)**(0.5),0),math.complex((0.5)**(0.5),0)],[math.complex((0.5)**(0.5),0),math.complex(-((0.5)**(0.5)),0)]];
 const I=[[math.complex(1,0),0],[0,math.complex(1,0)]];
-const gateDic = {'X':X, 'Y':Y, 'Z':Z, 'H':H, 'I':I};
+const II=[[math.complex(1,0)]];
+const CNOT=[[math.complex(1,0),0,0,0],[0,math.complex(1,0),0,0],[0,0,0,math.complex(1,0)],[0,0,math.complex(1,0),0]];
+const gateDic = {'X':X, 'Y':Y, 'Z':Z, 'H':H, 'I':I, 'CNOT':CNOT, 'II':II};
 
 function tensorProduct(A, B) {
   const rowsA = A.length;
@@ -129,11 +188,15 @@ function calcFullMatrix() {
   let result = tensorProduct(tensorProduct(gateDic[gateList[0][0]], gateDic[gateList[1][0]]), tensorProduct(gateDic[gateList[2][0]], gateDic[gateList[3][0]]));
   for (let i=1; i<maxLength; i++) {
     let mat = tensorProduct(tensorProduct(gateDic[gateList[0][i]], gateDic[gateList[1][i]]), tensorProduct(gateDic[gateList[2][i]], gateDic[gateList[3][i]]));
-    result = multiplyComplexMatrices(result, mat);
+    result = multiplyComplexMatrices(mat, result);
   }
 
   return result;
 }
+
+
+
+
 
 function calcStateVector() {
   let result =[];
@@ -145,11 +208,21 @@ function calcStateVector() {
   return result;
 }
 
-function plotHistogram() {
-  const hs1 = document.getElementById('hs1');
-  hs1.style.height = `${calcStateVector()[0].re * 200}px`;
-  // 0000~1111 까지 amplitude에 비례하게 height 설정하기 (구현해야 함)
+function plotHistogram(statevector) {
+  for (let i=0; i<16; i++) {
+    const histogram = document.getElementById(`histogram${i}`);
+    histogram.style.height = `${200*(math.abs(statevector[i]))**2}px`;
+  }
 }
+
+// function plotStatevector() {
+//   const statevectormain = document.getElementsByClassName('statevector-main')[0];
+//   const statevectorStr='';
+
+//   for (let i=0; )
+
+//   statevectormain.innerHTML = statevectorStr;
+// }
 
 
 

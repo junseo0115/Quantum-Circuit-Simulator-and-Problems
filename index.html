@@ -13,50 +13,42 @@
   <div class="grid-container">
     <header class="header">양자컴퓨팅을 배워보자! - Let's Learn Quantum Computing!</header>
     
-    <main class="gate-area">gate
+    <main class="gate-area">Gate
       <div class="gate outCircuit" id="x-gate">X</div>
       <div class="gate outCircuit" id="y-gate">Y</div>
       <div class="gate outCircuit" id="z-gate">Z</div>
       <div class="gate outCircuit" id="H-gate">H</div>
-      <div class="gate outCircuit" id="CNOT-gate">CNOT</div>
+      <div class="doubleGate outCircuit" id="CNOT-gate">CNOT</div>
+
+    
     </main>
 
 
 
     <main class="circuit-area">
-      <div class="circuit-header">circuit</div>
+      <div class="circuit-header">Circuit</div>
       <div class="circuit-main">
         <div class="circuit-name">q0</div>
         <div class="circuit-name">q1</div>
         <div class="circuit-name">q2</div>
         <div class="circuit-name">q3</div>
-        <div class="circuit-name">q4</div>
-        <div class="circuit-name">q5</div>
 
 
+
         <div class="circuit"></div>
         <div class="circuit"></div>
         <div class="circuit"></div>
         <div class="circuit"></div>
-        <div class="circuit"></div>
-        <div class="circuit"></div>
+
         
       </div>
     </main>
 
     <footer class="histogram-area">
-      <div class="histogram-header">histogram</div>
+      <div class="histogram-header">Probability</div>
 
-      <div class="histogram-main">
-        <div id='hs1'  style="background-color: brown; margin: 0 5px ; height: 100px;"></div>
-      </div>
+      <div class="histogram-main"></div>
     </footer>
-    
-
-
-
-
-
 
     <aside class="aside">Sidebar
       <ul>
@@ -74,9 +66,12 @@
 
 
 
+    <footer class="statevector-area">Statevector
 
-
-    <footer class="blochsphere-area">blochsphere</footer>
+        <p>|&Psi;>=</p>
+        <div class="statevector-main"></div>
+      
+    </footer>
 
   </div>  
 
@@ -93,7 +88,20 @@
       histogramMain.append(baseKet);
       baseKet.style.gridRow = '2/3';
       baseKet.style.gridColumn = `${i+1} / ${i+2}`;
+
+      const histogram = document.createElement('div');
+      histogram.id = `histogram${i}`;
+      histogram.style.background = 'brown';
+      histogram.style.margin = '0 10px';
+      histogram.style.height = '10px';
+      histogram.style.gridRow = '1/2';
+      histogram.style.gridColumn = `${i+1} / ${i+2}`;
+      histogramMain.append(histogram);
+
+
     };
+
+
   </script>
 
   <script src="script.js"></script>
