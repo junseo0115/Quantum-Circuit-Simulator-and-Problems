@@ -28,59 +28,59 @@ gates.forEach(gate => {
     }
 
     function addGate(circuitIndex, gate) {
-      if (gate.classList.contains('doubleGate') && circuitIndex < circuits.length - 1) {
-        circuits[circuitIndex].style.background = '#db9adb';
-        circuits[circuitIndex+1].style.background = '#db9adb'
-        while (inCircuitGates[circuitIndex].length !== inCircuitGates[circuitIndex + 1].length) {
-          if (inCircuitGates[circuitIndex].length < inCircuitGates[circuitIndex + 1].length) {
-            inCircuitGates[circuitIndex].push('I');
-          } else {
-            inCircuitGates[circuitIndex + 1].push('I');
+      if (inCircuitGates[circuitIndex].length<12) {
+        if (gate.classList.contains('doubleGate') && circuitIndex < circuits.length - 1) {
+          circuits[circuitIndex].style.background = '#db9adb';
+          circuits[circuitIndex+1].style.background = '#db9adb'
+          while (inCircuitGates[circuitIndex].length !== inCircuitGates[circuitIndex + 1].length) {
+            if (inCircuitGates[circuitIndex].length < inCircuitGates[circuitIndex + 1].length) {
+              inCircuitGates[circuitIndex].push('I');
+            } else {
+              inCircuitGates[circuitIndex + 1].push('I');
+            }
           }
+          const newGate1 = document.createElement('div');
+          newGate1.classList.add('gate', 'inCircuit');
+          newGate1.style.left = `${75 * inCircuitGates[circuitIndex].length}px`;
+          const gatename1 = document.createTextNode(gate.innerHTML);
+          newGate1.append(gatename1);
+          circuits[circuitIndex].appendChild(newGate1);
+     
+          const newGate2 = document.createElement('div');
+          newGate2.classList.add('gate', 'inCircuit');
+          newGate2.style.left = `${75 * inCircuitGates[circuitIndex].length}px`;
+          const gatename2 = document.createTextNode(gate.innerHTML);
+          newGate2.append(gatename2);
+          circuits[circuitIndex+1].appendChild(newGate2);
+  
+          const gateLine = document.createElement('div');
+          gateLine.classList.add('gateLine');
+          gateLine.style.left = `${75 * inCircuitGates[circuitIndex].length+30}px`;
+          gateLine.style.top = `10px`;
+          circuits[circuitIndex].appendChild(gateLine);
+  
+  
+          inCircuitGates[circuitIndex].push(gate.innerHTML);
+          inCircuitGates[circuitIndex+1].push('II');
+          const statevector = calcStateVector();
+          plotHistogram(statevector);
+          plotStatevector(statevector);
+  
+  
+        } else if ( !gate.classList.contains('doubleGate')) {
+          circuits[circuitIndex].style.background = '#db9adb';
+          const newGate = document.createElement('div');
+          newGate.classList.add('gate', 'inCircuit');
+          newGate.style.left = `${75 * inCircuitGates[circuitIndex].length}px`;
+          const gatename = document.createTextNode(gate.innerHTML);
+          newGate.append(gatename);
+          circuits[circuitIndex].appendChild(newGate);
+          inCircuitGates[circuitIndex].push(gate.innerHTML);
+          const statevector = calcStateVector();
+          plotHistogram(statevector);
+          plotStatevector(statevector);
         }
-        const newGate1 = document.createElement('div');
-        newGate1.classList.add('gate', 'inCircuit');
-        newGate1.style.left = `${75 * inCircuitGates[circuitIndex].length}px`;
-        const gatename1 = document.createTextNode(gate.innerHTML);
-        newGate1.append(gatename1);
-        circuits[circuitIndex].appendChild(newGate1);
-   
-        const newGate2 = document.createElement('div');
-        newGate2.classList.add('gate', 'inCircuit');
-        newGate2.style.left = `${75 * inCircuitGates[circuitIndex].length}px`;
-        const gatename2 = document.createTextNode(gate.innerHTML);
-        newGate2.append(gatename2);
-        circuits[circuitIndex+1].appendChild(newGate2);
-
-        const gateLine = document.createElement('div');
-        gateLine.classList.add('gateLine');
-        gateLine.style.left = `${75 * inCircuitGates[circuitIndex].length+30}px`;
-        gateLine.style.top = `10px`;
-        circuits[circuitIndex].appendChild(gateLine);
-
-
-        inCircuitGates[circuitIndex].push(gate.innerHTML);
-        inCircuitGates[circuitIndex+1].push('II');
-        const statevector = calcStateVector();
-        plotHistogram(statevector);
-        plotStatevector(statevector);
-
-
-
-
-      } else if ( !gate.classList.contains('doubleGate')) {
-        circuits[circuitIndex].style.background = '#db9adb';
-        const newGate = document.createElement('div');
-        newGate.classList.add('gate', 'inCircuit');
-        newGate.style.left = `${75 * inCircuitGates[circuitIndex].length}px`;
-        const gatename = document.createTextNode(gate.innerHTML);
-        newGate.append(gatename);
-        circuits[circuitIndex].appendChild(newGate);
-        inCircuitGates[circuitIndex].push(gate.innerHTML);
-        const statevector = calcStateVector();
-        plotHistogram(statevector);
-        plotStatevector(statevector);
-      }
+      }     
     }
     
 
