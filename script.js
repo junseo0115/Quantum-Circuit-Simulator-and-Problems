@@ -20,23 +20,17 @@ gates.forEach(gate => {
             gateRect.right > circuits[i].getBoundingClientRect().left &&
             gateRect.top < circuits[i].getBoundingClientRect().bottom &&
             gateRect.bottom > circuits[i].getBoundingClientRect().top) {
-          circuits[i].style.background = 'red';
+          circuits[i].style.background = '#c73dc7';
         } else {
-          circuits[i].style.background = '#333';
+          circuits[i].style.background = '#db9adb';
         }
       }
     }
 
-
-
-
-
-
-
     function addGate(circuitIndex, gate) {
       if (gate.classList.contains('doubleGate') && circuitIndex < circuits.length - 1) {
-        circuits[circuitIndex].style.background = '#333';
-        circuits[circuitIndex+1].style.background = '#333'
+        circuits[circuitIndex].style.background = '#db9adb';
+        circuits[circuitIndex+1].style.background = '#db9adb'
         while (inCircuitGates[circuitIndex].length !== inCircuitGates[circuitIndex + 1].length) {
           if (inCircuitGates[circuitIndex].length < inCircuitGates[circuitIndex + 1].length) {
             inCircuitGates[circuitIndex].push('I');
@@ -61,7 +55,7 @@ gates.forEach(gate => {
         const gateLine = document.createElement('div');
         gateLine.classList.add('gateLine');
         gateLine.style.left = `${75 * inCircuitGates[circuitIndex].length+30}px`;
-        gateLine.style.top = `${0}px`;
+        gateLine.style.top = `10px`;
         circuits[circuitIndex].appendChild(gateLine);
 
 
@@ -75,7 +69,7 @@ gates.forEach(gate => {
 
 
       } else if ( !gate.classList.contains('doubleGate')) {
-        circuits[circuitIndex].style.background = '#333';
+        circuits[circuitIndex].style.background = '#db9adb';
         const newGate = document.createElement('div');
         newGate.classList.add('gate', 'inCircuit');
         newGate.style.left = `${75 * inCircuitGates[circuitIndex].length}px`;
@@ -98,15 +92,13 @@ gates.forEach(gate => {
             gateRect.right > circuits[i].getBoundingClientRect().left &&
             gateRect.top < circuits[i].getBoundingClientRect().bottom &&
             gateRect.bottom > circuits[i].getBoundingClientRect().top) {
-          circuits[i].style.background = '#333';
+          circuits[i].style.background = '#db9adb';
 
 
           addGate(i, gateElement)
   
           break;
         }
-
-
       } 
       
       gateElement.style.left = `${originalX}px`;
@@ -116,8 +108,6 @@ gates.forEach(gate => {
       document.removeEventListener('mousemove', moveBox);
       document.removeEventListener('mouseup', mouseUpHandler);
     }
- 
-
     
     document.addEventListener('mousemove', moveBox);
     document.addEventListener('mouseup', mouseUpHandler);
@@ -133,9 +123,7 @@ const X=[[0,math.complex(1,0)],[math.complex(1,0),0]];
 const Y=[[0,math.complex(0,-1)],[math.complex(0,1),0]];
 const Z=[[math.complex(1,0),0],[0,math.complex(-1,0)]];
 const H=[[math.complex((0.5)**(0.5),0),math.complex((0.5)**(0.5),0)],[math.complex((0.5)**(0.5),0),math.complex(-((0.5)**(0.5)),0)]];
-
 const T=[[math.complex(1,0),0],[0,math.complex((0.5)**(0.5),(0.5)**(0.5))]];
-
 const I=[[math.complex(1,0),0],[0,math.complex(1,0)]];
 const II=[[math.complex(1,0)]];
 const CNOT=[[math.complex(1,0),0,0,0],[0,math.complex(1,0),0,0],[0,0,0,math.complex(1,0)],[0,0,math.complex(1,0),0]];
@@ -203,9 +191,6 @@ function calcFullMatrix() {
 }
 
 
-
-
-
 function calcStateVector() {
   let result =[];
 
@@ -230,20 +215,18 @@ function plotHistogram(statevector) {
 
 function plotStatevector(statevector) {
   const statevectormain = document.getElementsByClassName('statevector-main')[0];
-  let statevectorStr = '';
+  statevectormain.innerHTML = ''
 
   for (let i = 0; i < 16; i++) {
     if (statevector[i] != 0) {
       const realPart = statevector[i].re.toFixed(4);
       const imaginaryPart = statevector[i].im.toFixed(4);
-      statevectorStr += `+(${realPart}+${imaginaryPart}i)|` + (i).toString(2).padStart(4, '0') + '> '; 
+      statevectormain.innerHTML += `$+(${realPart}+${imaginaryPart}i)|${(i).toString(2).padStart(4, '0')} \\rangle$`;
+      MathJax.typesetPromise();
     }
   }
 
-  statevectormain.innerHTML = statevectorStr;
 }
-
-
 
 
 
@@ -269,3 +252,27 @@ function deepCopy(obj) {
   return copy;
 }
 
+let menu = document.getElementsByClassName("menu");
+
+
+for (let i = 0; i < menu.length; i++) {
+  menu[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    let content = this.nextElementSibling;
+    let pcontent = this.parentElement;
+
+    if (content.style.maxHeight) {
+      content.style.maxHeight = null;
+    } else {
+      content.style.maxHeight = content.scrollHeight + "px";
+    }
+
+    let currentElement = content;
+    while (currentElement.parentElement && currentElement.parentElement.classList.contains("sideContent")) {
+      currentElement = currentElement.parentElement;
+      currentElement.style.maxHeight = Array.from(currentElement.children).reduce((acc, child) => {
+        return acc + (child.scrollHeight || 0);
+      }, 0) + "px";
+    }
+  });
+}

@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>양자컴퓨팅을 배워보자!-Let's Learn Quantum Computing!</title>
+  <title>양자 회로 시뮬레이터 - Quantum Circuit Simulator</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/9.5.0/math.min.js"></script>
   <script>
     MathJax = {
@@ -24,7 +25,7 @@
 
 <body>
   <div class="grid-container">
-    <header class="header">양자컴퓨팅을 배워보자! - Let's Learn Quantum Computing!</header>
+    <header class="header">Quantum Circuit Simulator&ensp;<i class="fa-brands fa-react"></i> </header>
     
     <main class="gate-area">Gate
       <div class="gate outCircuit" id="x-gate">X</div>
@@ -34,8 +35,6 @@
       <div class="gate outCircuit" id="T-gate">T</div>
       <div class="doubleGate outCircuit" id="CNOT-gate">CNOT</div>
       <div class="doubleGate outCircuit" id="SWAP-gate">SWAP</div>
-
-    
     </main>
 
 
@@ -48,83 +47,127 @@
         <div class="circuit-name">q2</div>
         <div class="circuit-name">q3</div>
 
+        <div class="circuit"></div>
+        <div class="circuit"></div>
+        <div class="circuit"></div>
+        <div class="circuit"></div>
 
-
-        <div class="circuit"></div>
-        <div class="circuit"></div>
-        <div class="circuit"></div>
-        <div class="circuit"></div>
-        <button id="clear">Clear</button>
-
-        
+        <button id="clear">Clear <i class="fa-solid fa-trash"></i></button>
       </div>
     </main>
 
     <footer class="histogram-area">
       <div class="histogram-header">Probability</div>
-
       <div class="histogram-main"></div>
     </footer>
 
-    <aside class="aside">Sidebar
-      <ul>
-        <li>
-          <button>Tutorial</button>
-          <p>분수 나타내기 $\frac{2}{4} = \frac{1}{2}$</p>
-        </li>
-        <li>
-          <button>Gate</button>
-        </li>
-        <li>
-          <button>Problems</button>
-        </li>
-      </ul>
-    </aside>
-
-
-
     <footer class="statevector-area">Statevector
-
-        <p>|&Psi;>=</p>
-        <div class="statevector-main"></div>
-      
+      <p>$\vert \psi \rangle=$</p>
+      <div class="statevector-main"></div>
     </footer>
 
-  </div>  
 
 
+    <aside class="aside">Sidebar
+      <button class="menu">Gate Information</button>
+      <div class="sideContent">
 
+        <button class="menu">X-gate</button>
+        <div class="sideContent">
+          <p>X-gate (Pauli-X, NOT gate)</p>
+          <p>$X = \begin{pmatrix}
+            0 & 1 \\
+            1 & 0 
+            \end{pmatrix}$ </p>
+        </div>
 
+        <button class="menu">Y-gate</button>
+        <div class="sideContent">
+          <p>Y-gate (Pauli-Y gate)</p>
+          <p>$Y = \begin{pmatrix}
+            0 & -i \\
+            i & 0 
+            \end{pmatrix}$ </p>
+        </div>
+
+        <button class="menu">Z-gate</button>
+        <div class="sideContent">
+          <p>Z-gate (Pauli-Z gate)</p>
+          <p>$Z = \begin{pmatrix}
+            1 & 0 \\
+            0 & -1 
+            \end{pmatrix}$ </p>
+        </div>
+
+        <button class="menu">H-gate</button>
+        <div class="sideContent">
+          <p>H-gate (Hadamard gate)</p>
+          <p>$H = \frac{1}{\sqrt{2}} \begin{pmatrix}
+            1 & 1 \\
+            1 & -1 
+            \end{pmatrix}$ </p>
+        </div>
+
+        <button class="menu">T-gate</button>
+        <div class="sideContent">
+          <p>T-gate</p>
+          <p>$T = \begin{pmatrix}
+            1 & 0 \\
+            0 & e^{i\pi/4} 
+            \end{pmatrix}$ </p>
+        </div>
+
+        <button class="menu">CNOT-gate</button>
+        <div class="sideContent">
+          <p>CNOT-gate (Controlled NOT, CX gate)</p>
+          <p>$\text{CNOT} = \begin{pmatrix}
+            1 & 0 & 0 & 0 \\
+            0 & 1 & 0 & 0 \\
+            0 & 0 & 0 & 1 \\
+            0 & 0 & 1 & 0 
+            \end{pmatrix}$ </p>
+        </div>
+
+        <button class="menu">SWAP-gate</button>
+        <div class="sideContent">
+          <p>SWAP-gate</p>
+          <p>$\text{SWAP} = \begin{pmatrix}
+            1 & 0 & 0 & 0 \\
+            0 & 0 & 1 & 0 \\
+            0 & 1 & 0 & 0 \\
+            0 & 0 & 0 & 1 
+            \end{pmatrix}$ </p>
+        </div>
+      </div>
+  
+      <button class="menu">About Me</button>
+      <div class="sideContent">
+        <p>Choi Junseo</p>
+        <p>SSHS 35</p>
+        <p>GitHub: <a href="https://github.com/junseo0115" target="_blank" style="color: inherit;">https://github.com/junseo0115</a></p>
+      </div>   
+    </aside>
 
 
   <script>
     const histogramMain = document.getElementsByClassName('histogram-main')[0]
     for (let i=0; i<16; i++){
       const baseKet = document.createElement('div');
-      baseKet.append(document.createTextNode('|'+(i).toString(2).padStart(4, '0')+'>'));
+      baseKet.append(document.createTextNode(`\\(\\vert${(i).toString(2).padStart(4, '0')}\\rangle\\)`));
       histogramMain.append(baseKet);
       baseKet.style.gridRow = '2/3';
       baseKet.style.gridColumn = `${i+1} / ${i+2}`;
 
       const histogram = document.createElement('div');
       histogram.id = `histogram${i}`;
-      histogram.style.background = 'brown';
+      histogram.style.background = '#832a83';
       histogram.style.margin = '0 10px';
       histogram.style.height = '10px';
       histogram.style.gridRow = '1/2';
       histogram.style.gridColumn = `${i+1} / ${i+2}`;
       histogramMain.append(histogram);
-
-
     };
-
-
   </script>
-
   <script src="script.js"></script>
-
 </body>
-
-
-
 </html>
